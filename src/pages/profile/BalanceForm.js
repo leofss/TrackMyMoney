@@ -14,8 +14,6 @@ export default function TransactionForm({uid}) {
     })
   }
 
-  console.log(response)
-
   useEffect(() => {
     if(response.success){
       setName('')

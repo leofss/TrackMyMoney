@@ -6,7 +6,9 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'light-green': '#cffdd3'
+        'light-green': '#cffdd3',
+        'name': '#777',
+        'button': '#ddd'
       }
     },
   },
