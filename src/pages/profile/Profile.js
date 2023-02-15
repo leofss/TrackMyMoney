@@ -1,5 +1,5 @@
 import {useAuthContext} from '../../hooks/UseAuthContext'
-import TotalSpendings from '../../components/TotalSpendings';
+import TotalAmount from '../../components/TotalAmount';
 import BalanceForm from './BalanceForm';
 import BalanceList from './BalanceList';
 import { useCollection } from '../../hooks/useCollection';
@@ -18,7 +18,7 @@ export default function Profile() {
 
       <div className='grid grid-cols-3 justify-items-center mt-10'>
         <div>
-          <p>Total spendings: R$<TotalSpendings/></p>
+          <p>Total spendings: R$<TotalAmount collection={'balance'}/></p>
         </div>
         <div className=''>
           {documents && <BalanceList balance={documents}/>}

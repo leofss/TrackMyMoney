@@ -5,7 +5,7 @@ import { useCollection } from '../../hooks/useCollection';
 import TransactionList from './TransactionList';
 // components
 import TransactionForm from './TransactionForm'
-import TotalSpendings from '../../components/TotalSpendings';
+import TotalAmount from '../../components/TotalAmount';
 
 export default function Home() {
 
@@ -14,7 +14,7 @@ export default function Home() {
 
   return (
     <div>
-      <h2 className='text-3xl flex ml-56 mt-28'>Your total spendings: R$<TotalSpendings/></h2>
+      <h2 className='text-3xl flex ml-56 mt-28'>Your total spendings: R$<TotalAmount collection={'transactions'}/></h2>
       <div className={styles.container}>
         <div className={styles.content}>
           {error && <p>{error}</p>}
