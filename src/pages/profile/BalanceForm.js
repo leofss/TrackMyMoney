@@ -24,7 +24,7 @@ export default function TransactionForm({uid}) {
   return (
     <>
       <h3>Add money to your account balance</h3>
-      <form className='flex flex-col mt-3' onSubmit={handleSubmit}>
+      <form className='flex  bg-light-green  p-2 rounded-3xl flex-col mt-3' onSubmit={handleSubmit}>
         <label className='flex flex-col items-center'>
           <span>Transaction name:</span>
           <input

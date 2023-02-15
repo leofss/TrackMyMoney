@@ -1,12 +1,20 @@
 import {useAuthContext} from '../../hooks/UseAuthContext'
-import TotalAmount from '../../components/TotalAmount';
+import {useTotalAmount} from '../../hooks/useTotalAmount'
 import BalanceForm from './BalanceForm';
 import BalanceList from './BalanceList';
 import { useCollection } from '../../hooks/useCollection';
+import { useEffect, useState } from 'react';
 
 export default function Profile() {
   const {user} = useAuthContext();
   const {documents, error} = useCollection('balance',["uid", "==", user.uid])
+  const {sum: sumTransactions} = useTotalAmount("transactions")
+  const {sum: sumBalance} = useTotalAmount("balance")
+  const [totalBalance, setTotalBalance] = useState(0)
+
+  useEffect(() => {
+    setTotalBalance(sumBalance - sumTransactions)
+  }, [sumTransactions, sumBalance, documents])
 
   return (
     <div>
@@ -18,12 +26,14 @@ export default function Profile() {
 
       <div className='grid grid-cols-3 justify-items-center mt-10'>
         <div>
-          <p>Total spendings: R$<TotalAmount collection={'balance'}/></p>
+          <p>Total balance: R${sumBalance}</p>
+          <p>Total spendings: R${sumTransactions}</p>
+          <p className={totalBalance >= 0 ? 'text-total-positive' : 'text-rose-600'}>Total: R${totalBalance}</p>
         </div>
-        <div className=''>
+        <div className='w-full'>
           {documents && <BalanceList balance={documents}/>}
         </div>
-        <div className='flex bg-light-green flex-col p-2 rounded-3xl'>
+        <div className='flex flex-col'>
           <BalanceForm uid={user.uid}/>
         </div>
         {error && <p>{error}</p>}
@@ -31,3 +41,5 @@ export default function Profile() {
     </div>
   )
 }
+
+
