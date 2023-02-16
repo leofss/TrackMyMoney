@@ -1,9 +1,13 @@
 import { useEffect, useState } from 'react'
 import {useFirestore} from '../../hooks/useFirestore';
+import { useTotalAmount } from '../../hooks/useTotalAmount';
 export default function TransactionForm({uid}) {
   const [name, setName] = useState('')
   const [amount, setAmount] = useState('')
   const {addDocument, response} = useFirestore('transactions')//passa a collection, se não existe firestore cria
+  const {sum: sumTransactions} = useTotalAmount("transactions")
+  const {sum: sumBalance} = useTotalAmount("balance")
+  const {totalUpdated} = useTotalAmount("balance",sumBalance, sumTransactions)
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -43,7 +47,8 @@ export default function TransactionForm({uid}) {
             value={amount} 
           />
         </label>
-        {!response.isPending && <button>Add Transaction</button>}
+        {totalUpdated <= 0  && <button className='' disabled >Not enough balance</button>}
+        {!response.isPending && totalUpdated > 0 && <button>Add Transaction</button>}
         {response.isPending && <button disabled >Loading...</button>}
       </form>
     </>

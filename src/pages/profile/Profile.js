@@ -10,11 +10,7 @@ export default function Profile() {
   const {documents, error} = useCollection('balance',["uid", "==", user.uid])
   const {sum: sumTransactions} = useTotalAmount("transactions")
   const {sum: sumBalance} = useTotalAmount("balance")
-  const [totalBalance, setTotalBalance] = useState(0)
-
-  useEffect(() => {
-    setTotalBalance(sumBalance - sumTransactions)
-  }, [sumTransactions, sumBalance, documents])
+  const {totalUpdated} = useTotalAmount("transaction",sumBalance, sumTransactions)
 
   return (
     <div>
@@ -28,7 +24,7 @@ export default function Profile() {
         <div>
           <p>Total balance: R${sumBalance}</p>
           <p>Total spendings: R${sumTransactions}</p>
-          <p className={totalBalance >= 0 ? 'text-total-positive' : 'text-rose-600'}>Total: R${totalBalance}</p>
+          <p className={totalUpdated >= 0 ? 'text-total-positive' : 'text-rose-600'}>Total: R${totalUpdated}</p>
         </div>
         <div className='w-full'>
           {documents && <BalanceList balance={documents}/>}
